@@ -1,0 +1,79 @@
+<div *ngIf="employees | async as employeeData" class="main-content">
+  <div class="header-bar">
+    <div class="title-wrapper">
+      <h3>Employees List ({{ filteredEmployees.length }} found)</h3>
+    </div>
+    <div class="search-bar-wrapper">
+      <input
+        class="search-bar"
+        placeholder="Search employees"
+        (keyup)="searchFilter($event)"
+      />
+    </div>
+  </div>
+  <table class="table">
+    <thead class="table-head">
+      <tr
+        class="table-head-row"
+        cdkDropList
+        cdkDropListOrientation="horizontal"
+        [cdkDropListData]="columns"
+        (cdkDropListDropped)="dropColumn($event)"
+      >
+        <th class="table-head-column" *ngFor="let column of columns" cdkDrag>
+          <div class="table-head-item">
+            <span>{{ column | titlecase }}</span>
+            <div class="resort-button">
+              <mat-icon
+                *ngIf="
+                  (sortOrderVal === 'ascending' && column === sortByVal) ||
+                    column !== sortByVal;
+                  else elseBlock
+                "
+                (click)="resortItems(column, 'descending')"
+                inline
+                >arrow_upward</mat-icon
+              >
+            </div>
+            <ng-template class="resort-button" #elseBlock>
+              <mat-icon (click)="resortItems(column, 'ascending')" inline
+                >arrow_downward</mat-icon
+              >
+            </ng-template>
+          </div>
+        </th>
+      </tr>
+    </thead>
+    <tbody
+      class="table-body"
+      cdkDropList
+      [cdkDropListData]="filteredEmployees"
+      (cdkDropListDropped)="dropRow($event)"
+    >
+      <tr
+        class="table-body-row"
+        cdkDrag
+        *ngFor="let employee of filteredEmployees"
+      >
+        <td
+          class="table-body-cell"
+          *ngFor="let field of columns; index as i"
+          cdkDragHandle
+        >
+          <span class="table-body-text" *ngIf="field === 'id'">
+            {{ employee.id }}
+          </span>
+          <span class="table-body-text" *ngIf="field === 'name'">
+            {{ employee.name }}
+          </span>
+          <span class="table-body-text" *ngIf="field === 'age'">
+            {{ employee.age }}
+          </span>
+          <span class="table-body-text" *ngIf="field === 'job'">
+            {{ employee.job }}
+          </span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
