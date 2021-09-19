@@ -2,23 +2,17 @@ import { Employee } from './../models/models';
 import { EntityState, createEntityAdapter } from '@ngrx/entity';
 
 export interface EmployeesState extends EntityState<Employee> {
-  count: number;
   sortBy: string;
   sortOrder: string;
   searchTerm: string;
+  numSearchResults: number;
 }
 
-export const employeesAdapter = createEntityAdapter<Employee>({
-  sortComparer: sortEmployeesFunc,
-});
+export const employeesAdapter = createEntityAdapter<Employee>();
 
 export const initialState: EmployeesState = employeesAdapter.getInitialState({
-  count: 0,
   sortBy: 'id',
   sortOrder: 'ascending',
-  searchTerm: ''
+  searchTerm: '',
+  numSearchResults: 5,
 });
-
-export function sortEmployeesFunc(a: Employee, b: Employee): number {
-    return a.id > b.id ? 1 : -1;
-}

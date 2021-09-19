@@ -1,7 +1,7 @@
 import { getEmployees } from './employees.selector';
 import { AppState } from 'src/app/state/app.state';
 import { Store } from '@ngrx/store';
-import { loadEmployeesSuccess } from './employees.actions';
+import { loadEmployeesSuccess, updateNumSearchResults } from './employees.actions';
 import { EmployeesService } from './../services/employees.service';
 import { Injectable } from '@angular/core';
 import { loadEmployees } from './employees.actions';
@@ -22,9 +22,8 @@ export class EmployeesEffects {
         ofType(loadEmployees),
         withLatestFrom(this.store.select(getEmployees)),
         mergeMap((action) => {
-          return this.employeesService.getEmployees().pipe( 
+          return this.employeesService.getEmployees(action[0]).pipe( 
             map((employees) => {
-              console.log('load employees', employees)
               return this.store.dispatch(loadEmployeesSuccess({employees}));
             })
           );

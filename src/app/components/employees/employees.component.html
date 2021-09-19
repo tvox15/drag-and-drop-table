@@ -1,14 +1,14 @@
 <div *ngIf="employees | async as employeeData" class="main-content">
   <div class="header-bar">
     <div class="title-wrapper">
-      <h3>Employees List ({{ filteredEmployees.length }} found)</h3>
+      <h3>Employees List ({{ numSearchResultsVal }} found)</h3>
     </div>
     <div class="search-bar-wrapper">
       <input
         class="search-bar"
         placeholder="Search employees"
         (keyup)="searchFilter($event)"
-      />
+        />
     </div>
   </div>
   <table class="table">
@@ -18,27 +18,19 @@
         cdkDropList
         cdkDropListOrientation="horizontal"
         [cdkDropListData]="columns"
-        (cdkDropListDropped)="dropColumn($event)"
-      >
+        (cdkDropListDropped)="dropColumn($event)">
         <th class="table-head-column" *ngFor="let column of columns" cdkDrag>
           <div class="table-head-item">
             <span>{{ column | titlecase }}</span>
             <div class="resort-button">
               <mat-icon
-                *ngIf="
-                  (sortOrderVal === 'ascending' && column === sortByVal) ||
-                    column !== sortByVal;
-                  else elseBlock
-                "
-                (click)="resortItems(column, 'descending')"
-                inline
-                >arrow_upward</mat-icon
-              >
+                *ngIf="(sortOrderVal === 'ascending' && column === sortByVal) ||
+                column !== sortByVal;
+                else elseBlock" (click)="resortItems(column, 'descending')"
+                inline>arrow_upward</mat-icon>
             </div>
             <ng-template class="resort-button" #elseBlock>
-              <mat-icon (click)="resortItems(column, 'ascending')" inline
-                >arrow_downward</mat-icon
-              >
+              <mat-icon (click)="resortItems(column, 'ascending')" inline>arrow_downward</mat-icon>
             </ng-template>
           </div>
         </th>
@@ -48,18 +40,15 @@
       class="table-body"
       cdkDropList
       [cdkDropListData]="filteredEmployees"
-      (cdkDropListDropped)="dropRow($event)"
-    >
+      (cdkDropListDropped)="dropRow($event)">
       <tr
         class="table-body-row"
         cdkDrag
-        *ngFor="let employee of filteredEmployees"
-      >
+        *ngFor="let employee of filteredEmployees">
         <td
           class="table-body-cell"
           *ngFor="let field of columns; index as i"
-          cdkDragHandle
-        >
+          cdkDragHandle>
           <span class="table-body-text" *ngIf="field === 'id'">
             {{ employee.id }}
           </span>
@@ -76,4 +65,10 @@
       </tr>
     </tbody>
   </table>
+  <mat-paginator
+    [length]="numSearchResultsVal"
+    [pageIndex]="pageIndexVal"
+    [pageSize]="pageSize"
+    (page)="pageEvent= paginateData($event)">
+  </mat-paginator>
 </div>

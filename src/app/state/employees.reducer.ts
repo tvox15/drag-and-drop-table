@@ -1,13 +1,12 @@
 import { initialState, employeesAdapter } from './employees.state';
 import { createReducer, on } from '@ngrx/store';
-import { loadEmployeesSuccess, updateSort, updateSearchTerm } from './employees.actions';
+import { loadEmployeesSuccess, updateSort, updateSearchTerm, updateNumSearchResults } from './employees.actions';
 
   const _employeesReducer = createReducer(
     initialState,
     on(loadEmployeesSuccess, (state, action) => {
         return employeesAdapter.setAll(action.employees, {
             ...state,
-            count: state.count + 1,
         })
     }),
      on(updateSort, (state, action) => {        
@@ -22,9 +21,15 @@ import { loadEmployeesSuccess, updateSort, updateSearchTerm } from './employees.
             ...state,
             searchTerm: action.searchTerm,
         }
+    }),
+    on(updateNumSearchResults, (state, action) => {
+        return {
+            ...state,
+            numSearchResults: action.numSearchResults
+        }
     })
 )  
- 
+
 
 // @ts-ignore
 export function employeesReducer(state, action) {

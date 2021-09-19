@@ -16,11 +16,6 @@ export const getEmployeesEntities = createSelector(
   employeesSelectors.selectEntities
 );
 
-export const getCount = createSelector(
-  getEmployeesState,
-  (state) => state.count
-);
-
 export const getSortBy = createSelector(
   getEmployeesState,
   (state) => state.sortBy
@@ -34,4 +29,9 @@ export const getSortOrder = createSelector(
 export const getSearchTerm = createSelector(
   getEmployeesState,
   (state) => state.searchTerm,
+);
+
+export const getNumSearchResults = createSelector(
+  getEmployeesState,
+  (state) => state.numSearchResults
 );

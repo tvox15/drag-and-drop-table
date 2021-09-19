@@ -9,6 +9,9 @@ import { EmployeesComponent } from './components/employees/employees.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { HttpClientModule } from '@angular/common/http';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 import { StoreModule } from '@ngrx/store';
 
 @NgModule({
@@ -19,6 +22,8 @@ import { StoreModule } from '@ngrx/store';
     MatTableModule,
     MatIconModule,
     HttpClientModule,
+    MatPaginatorModule,
+    BrowserAnimationsModule,
     EffectsModule.forRoot([EmployeesEffects]),
     StoreModule.forRoot(appReducer),
   ],
