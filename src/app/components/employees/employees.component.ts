@@ -19,7 +19,8 @@ import { Store } from '@ngrx/store';
   styleUrls: ['./employees.component.css'],
 })
 export class EmployeesComponent implements OnInit, OnDestroy {
-  columns: Array<string> = ['id', 'name', 'age', 'job'];
+   // @ts-ignore
+  columns: Array<string>   = ['id', 'name', 'age', 'job']; 
 
   // subscriptions
   // @ts-ignore
@@ -55,7 +56,7 @@ export class EmployeesComponent implements OnInit, OnDestroy {
   // @ts-ignore
   searchTermVal: string;
 
-  constructor(private store: Store<AppState>) {}
+  constructor(private store: Store<AppState>) { }
 
   ngOnInit(): void {
     // init variables
@@ -64,6 +65,7 @@ export class EmployeesComponent implements OnInit, OnDestroy {
     this.sortBy = this.store.select(getSortBy);
     this.sortOrder = this.store.select(getSortOrder);
     this.searchTerm = this.store.select(getSearchTerm);
+   
 
     // initial loading of employees
     this.store.dispatch(loadEmployees());
@@ -72,6 +74,8 @@ export class EmployeesComponent implements OnInit, OnDestroy {
     this.employeeSubscription = this.employees.subscribe((x) => {
       this.employeeLoadedData = x;
       this.filteredEmployees = x;
+    //  this.columns = x.keys();
+      console.log('x', x)
     });
 
     this.sortBySubscription = this.sortBy.subscribe((x) => {
@@ -110,7 +114,7 @@ export class EmployeesComponent implements OnInit, OnDestroy {
   }
 
   sortEmployees(): void {
-    // set filteredEmployees a
+    // set filteredEmployees 
     this.filteredEmployees.sort((a: Employee, b: Employee): number => {
       if (this.sortOrderVal === 'ascending') {
         // @ts-ignore
