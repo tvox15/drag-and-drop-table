@@ -1,6 +1,8 @@
 # ClickupFinalTest
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.2.4.
+### Goal
+
+Realize a component that receives data by http and shows results into a table. 
 
 ## Development server
 
